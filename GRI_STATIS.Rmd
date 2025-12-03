@@ -1,0 +1,1163 @@
+```{r}
+# Lectura de datos
+library(readxl)
+
+BLOQUE1 <- read_excel("C:/Users/Alvar/Downloads/GRI data/Recopilado_GRI.xlsx", sheet = "2019")
+BLOQUE2 <- read_excel("C:/Users/Alvar/Downloads/GRI data/Recopilado_GRI.xlsx", sheet = "2020")
+BLOQUE3 <- read_excel("C:/Users/Alvar/Downloads/GRI data/Recopilado_GRI.xlsx", sheet = "2021")
+BLOQUE4 <- read_excel("C:/Users/Alvar/Downloads/GRI data/Recopilado_GRI.xlsx", sheet = "2022")
+BLOQUE5 <- read_excel("C:/Users/Alvar/Downloads/GRI data/Recopilado_GRI.xlsx", sheet = "2023")
+BLOQUE6 <- read_excel("C:/Users/Alvar/Downloads/GRI data/Recopilado_GRI.xlsx", sheet = "2024")
+BLOQUE7 <- read_excel("C:/Users/Alvar/Downloads/GRI data/Recopilado_GRI.xlsx", sheet = "2025")
+```
+
+```{r}
+#CENTRAR LOS BLOQUES
+#CENTRAR LOS BLOQUES SIN EL GRI
+BLOQUE1CEN <- scale(BLOQUE1[,2:5], center=TRUE, scale=FALSE)
+BLOQUE2CEN <- scale(BLOQUE2[,2:5], center=TRUE, scale=FALSE)
+BLOQUE3CEN <- scale(BLOQUE3[,2:5], center=TRUE, scale=FALSE)
+BLOQUE4CEN <- scale(BLOQUE4[,2:5], center=TRUE, scale=FALSE)
+BLOQUE5CEN <- scale(BLOQUE5[,2:5], center=TRUE, scale=FALSE)
+BLOQUE6CEN <- scale(BLOQUE6[,2:5], center=TRUE, scale=FALSE)
+BLOQUE7CEN <- scale(BLOQUE7[,2:5], center=TRUE, scale=FALSE)
+
+```
+
+```{r}
+# Reviso que no esté usando el GRI
+dim(BLOQUE1CEN)
+```
+
+
+```{r}
+#PASO 2: calcular matrices de productos escalares
+S1=BLOQUE1CEN%*%t(BLOQUE1CEN)
+S1
+
+S2=BLOQUE2CEN%*%t(BLOQUE2CEN)
+S2
+
+S3=BLOQUE3CEN%*%t(BLOQUE3CEN)
+S3
+
+S4=BLOQUE4CEN%*%t(BLOQUE4CEN)
+S4
+
+S5=BLOQUE5CEN%*%t(BLOQUE5CEN)
+S5
+
+S6=BLOQUE6CEN%*%t(BLOQUE6CEN)
+S6
+
+S7=BLOQUE7CEN%*%t(BLOQUE7CEN)
+S7
+
+```
+
+```{r}
+#COMPARANDO LOS ESTUDIOS (BLOQUES - AÑOS)
+#Coeficiente de RV
+
+# Productos escalares propios
+S11 = colSums(data.frame(diag(t(S1)%*%S1))); raizS11 = sqrt(S11*S11); s11 = S11/raizS11
+S22 = colSums(data.frame(diag(t(S2)%*%S2))); raizS22 = sqrt(S22*S22); s22 = S22/raizS22
+S33 = colSums(data.frame(diag(t(S3)%*%S3))); raizS33 = sqrt(S33*S33); s33 = S33/raizS33
+S44 = colSums(data.frame(diag(t(S4)%*%S4))); raizS44 = sqrt(S44*S44); s44 = S44/raizS44
+S55 = colSums(data.frame(diag(t(S5)%*%S5))); raizS55 = sqrt(S55*S55); s55 = S55/raizS55
+S66 = colSums(data.frame(diag(t(S6)%*%S6))); raizS66 = sqrt(S66*S66); s66 = S66/raizS66
+S77 = colSums(data.frame(diag(t(S7)%*%S7))); raizS77 = sqrt(S77*S77); s77 = S77/raizS77
+
+# Año 1
+
+S12 = colSums(data.frame(diag(t(S1)%*%S2))); raizS12 = sqrt(S11*S22); s12 = S12/raizS12
+S13 = colSums(data.frame(diag(t(S1)%*%S3))); raizS13 = sqrt(S11*S33); s13 = S13/raizS13
+S14 = colSums(data.frame(diag(t(S1)%*%S4))); raizS14 = sqrt(S11*S44); s14 = S14/raizS14
+S15 = colSums(data.frame(diag(t(S1)%*%S5))); raizS15 = sqrt(S11*S55); s15 = S15/raizS15
+S16 = colSums(data.frame(diag(t(S1)%*%S6))); raizS16 = sqrt(S11*S66); s16 = S16/raizS16
+S17 = colSums(data.frame(diag(t(S1)%*%S7))); raizS17 = sqrt(S11*S77); s17 = S17/raizS17
+
+# Año 2
+
+S23 = colSums(data.frame(diag(t(S2)%*%S3))); raizS23 = sqrt(S22*S33); s23 = S23/raizS23
+S24 = colSums(data.frame(diag(t(S2)%*%S4))); raizS24 = sqrt(S22*S44); s24 = S24/raizS24
+S25 = colSums(data.frame(diag(t(S2)%*%S5))); raizS25 = sqrt(S22*S55); s25 = S25/raizS25
+S26 = colSums(data.frame(diag(t(S2)%*%S6))); raizS26 = sqrt(S22*S66); s26 = S26/raizS26
+S27 = colSums(data.frame(diag(t(S2)%*%S7))); raizS27 = sqrt(S22*S77); s27 = S27/raizS27
+
+# Año 3
+
+S34 = colSums(data.frame(diag(t(S3)%*%S4))); raizS34 = sqrt(S33*S44); s34 = S34/raizS34
+S35 = colSums(data.frame(diag(t(S3)%*%S5))); raizS35 = sqrt(S33*S55); s35 = S35/raizS35
+S36 = colSums(data.frame(diag(t(S3)%*%S6))); raizS36 = sqrt(S33*S66); s36 = S36/raizS36
+S37 = colSums(data.frame(diag(t(S3)%*%S7))); raizS37 = sqrt(S33*S77); s37 = S37/raizS37
+
+# Año 4
+
+S45 = colSums(data.frame(diag(t(S4)%*%S5))); raizS45 = sqrt(S44*S55); s45 = S45/raizS45
+S46 = colSums(data.frame(diag(t(S4)%*%S6))); raizS46 = sqrt(S44*S66); s46 = S46/raizS46
+S47 = colSums(data.frame(diag(t(S4)%*%S7))); raizS47 = sqrt(S44*S77); s47 = S47/raizS47
+
+# Año 5
+
+S56 = colSums(data.frame(diag(t(S5)%*%S6))); raizS56 = sqrt(S55*S66); s56 = S56/raizS56
+S57 = colSums(data.frame(diag(t(S5)%*%S7))); raizS57 = sqrt(S55*S77); s57 = S57/raizS57
+
+# Año 6
+
+S67 = colSums(data.frame(diag(t(S6)%*%S7))); raizS67 = sqrt(S66*S77); s67 = S67/raizS67
+```
+
+
+```{r}
+#matriz del coeficiente de correlación vectorial (RV)
+
+S <- matrix(c(
+  s11, s12, s13, s14, s15, s16, s17,
+  s12, s22, s23, s24, s25, s26, s27,
+  s13, s23, s33, s34, s35, s36, s37,
+  s14, s24, s34, s44, s45, s46, s47,
+  s15, s25, s35, s45, s55, s56, s57,
+  s16, s26, s36, s46, s56, s66, s67,
+  s17, s27, s37, s47, s57, s67, s77
+), nrow = 7, ncol = 7, byrow = TRUE)
+
+S
+```
+```{r}
+library(ggplot2)
+library(reshape2)
+library(viridis)
+
+# Etiquetas de años
+years <- 2019:2025
+rownames(S) <- years
+colnames(S) <- years
+
+# Reestructurar matriz para ggplot
+S_melt <- melt(S)
+colnames(S_melt) <- c("Año1","Año2","RV")
+
+# Crear heatmap
+ggplot(S_melt, aes(x = Año2, y = Año1, fill = RV)) +
+  geom_tile(color = "white") +
+  scale_fill_viridis(
+    name = "RV", 
+    option = "plasma",
+    limits = c(min(S), 1),
+    breaks = seq(0.90, 1, 0.02)
+  ) +
+  geom_text(aes(label = round(RV, 3)), color = "black", size = 5) +
+  labs(
+    title = "Matriz de Correlación Vectorial (RV) (2019–2025)",
+    x = NULL,
+    y = NULL
+  ) +
+  scale_x_continuous(breaks = years) +
+  scale_y_continuous(breaks = years) +
+  theme_minimal(base_size = 12) +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 13),
+    axis.text.x = element_text(angle = 45),
+    axis.text.y = element_text(margin = margin(r = -15)),
+    panel.grid = element_blank()
+  )
+```
+
+
+```{r}
+#Descomposición en valores singulares
+v<-eigen(S)
+v
+#Autovales
+A<-v[[1]]
+A
+
+Auto<-diag(A)
+Auto
+
+#Autovectores
+d<-v[[2]]
+d
+
+#Contiene los compromise weights transformados 
+# G = autovectores × raíz de los autovalores
+G=d%*%sqrt(Auto)
+G
+```
+
+Distancias Euclidianas
+
+```{r}
+dist_years <- dist(G[,1:2])
+dist_years
+```
+
+PLANO DE LA INTERESTRUCTURA
+
+```{r}
+
+plot(c(-1,1),c(-0.2,0.3),type="n",asp=1,xlab=" ", ylab=" ")
+abline(h=0,v=0,col="black")
+
+points(G[1,1], G[1,2],col="red",pch=16) #Año 2019
+points(G[2,1], G[2,2],col="blue",pch=17) #Año 2020
+points(G[3,1], G[3,2],col="black",pch=9) #Año 2021
+points(G[4,1], G[4,2],col="orange",pch=15) #Año 2022
+points(G[5,1], G[5,2],col="violet",pch=18) #Año 2023
+points(G[6,1], G[6,2],col="yellow",pch=16) #Año 2024
+points(G[7,1], G[7,2],col="green",pch=9) #Año 2025
+
+legend(x = "bottom",inset = c(0, -0.5), legend=c('2019','2020','2021','2022','2023','2024','2025'),  col=c('red','blue','black','orange','violet','yellow','green'),bty = "n",xpd = TRUE,horiz = TRUE,pch=c(16,17,9,15,18,16,9))
+
+
+```
+
+```{r}
+add_alpha <- function(col, alpha=0.5) {
+  rgb_val <- col2rgb(col) / 255
+  rgb(rgb_val[1], rgb_val[2], rgb_val[3], alpha = alpha)
+}
+
+cols <- c("tomato", "steelblue2", "black", "darkorange", "orchid3", "chocolate3", "green3")
+
+cols_alpha <- cols
+cols_alpha[2] <- add_alpha(cols[2], 0.65)  # 2020
+cols_alpha[3] <- add_alpha(cols[3], 0.48)  # 2021
+
+pch  <- c(16, 17, 15, 18, 19, 16, 17)
+
+labels <- c("2019","2020","2021","2022","2023","2024","2025")
+
+plot(G[,1], G[,2],
+     xlim = c(min(G[,1]) - 0.05, 0.05),
+     ylim = c(min(G[,2]) - 0.05, max(G[,2]) + 0.05),
+     xlab = "", ylab = "",
+     asp = 1,
+     type = "n",
+     cex.axis = 0.9)
+
+grid(col = "gray85", lty = 1)
+
+
+abline(h = 0, v = 0, col = "black", lwd = 1.3)
+
+
+for (i in 1:7) {
+  segments(0, 0, G[i,1], G[i,2], col = cols_alpha[i], lwd = 2)
+}
+
+points(G[,1], G[,2], pch = pch, col = cols_alpha, cex = 1.7)
+
+# Etiquetas para todos menos 2020 y 2021
+text(G[-c(2,3),1] - 0.032, G[-c(2,3),2],
+     labels[-c(2,3)], col="black", cex=1.1, font=2)
+
+# Ajuste especial para 2020
+text(G[2,1] - 0.027, G[2,2] + 0.005, "2020",
+     col="black", cex=1.1, font=2)
+
+# Ajuste especial para 2021
+text(G[3,1] - 0.035, G[3,2] + 0.011, "2021",
+     col="black", cex=1.1, font=2)
+
+```
+
+------------------------ SEGUNDA PARTE ---------------------------
+
+```{r}
+#Calcular la matriz compromiso
+
+alfa=-d[,1]*(1/sqrt(Auto[1,1]))
+alfa
+
+WW <- alfa[1]*S1 +
+      alfa[2]*S2 +
+      alfa[3]*S3 +
+      alfa[4]*S4 +
+      alfa[5]*S5 +
+      alfa[6]*S6 +
+      alfa[7]*S7
+
+WW
+```
+
+```{r}
+# Descomposición en valores singulares
+
+B<-eigen(WW)
+B
+
+#Autovalores
+c<- B[[ 1 ]]
+
+#matriz autovalores
+cc<-diag(c)
+cc
+
+dim(cc)
+```
+
+```{r}
+# Reemplazar valores nans 
+
+raizcuadrada<-sqrt(cc)
+raizcuadrada
+
+head(raizcuadrada)
+
+##reemplazo los valores de NA con ceros
+
+dim(raizcuadrada)
+raizc<-replace(raizcuadrada,which(raizcuadrada=="NaN"),0)
+raizc
+dim(raizc)
+```
+```{r}
+#Autovectores
+d<- B[[ 2 ]]
+dim(d)
+d
+
+head(d,10)
+
+Find=d%*%raizc
+
+Find  # Plano de la matriz compromiso
+dim(Find)
+View(Find)
+```
+
+##################### ETAPA 2 "COMPROMISO" #######################
+
+Gráfico compromiso
+
+```{r}
+x <- Find[,1]
+y <- Find[,2]
+
+idx_Q1 <- (x > 0 & y > 0)
+idx_Q2 <- (x < 0 & y > 0)
+idx_Q3 <- (x < 0 & y < 0)
+idx_Q4 <- (x > 0 & y < 0)
+```
+
+```{r}
+plot(x, y,
+     xlab="", ylab="",
+     pch=20, col="black",
+     xlim = range(x) / 1.2,
+     ylim = range(y) / 0.9,
+     cex=1.2, asp=1)
+
+abline(h=0, v=0, col="gray40", lwd=1.2)
+grid(col="gray85")
+
+points(x[idx_Q1], y[idx_Q1], col="firebrick2", pch=20, cex=1.5)
+points(x[idx_Q2], y[idx_Q2], col="dodgerblue3", pch=20, cex=1.5)
+points(x[idx_Q3], y[idx_Q3], col="purple3", pch=20, cex=1.5)
+points(x[idx_Q4], y[idx_Q4], col="darkorange2", pch=20, cex=1.5)
+
+text(x, y, labels = BLOQUE1$Country, pos=4, cex=0.8)
+
+```
+
+```{r}
+library(ggplot2)
+library(ggrepel)
+library(ggplotify)
+
+traduccion <- c(
+  "Australia" = "Australia",
+  "Austria" = "Austria",
+  "Belgium" = "Bélgica",
+  "Brazil" = "Brasil",
+  "Canada" = "Canadá",
+  "Chile" = "Chile",
+  "China" = "China",
+  "Colombia" = "Colombia",
+  "Cyprus" = "Chipre",
+  "Czech Republic" = "República Checa",
+  "Denmark" = "Dinamarca",
+  "Estonia" = "Estonia",
+  "Finland" = "Finlandia",
+  "France" = "Francia",
+  "Germany" = "Alemania",
+  "Greece" = "Grecia",
+  "Hungary" = "Hungría",
+  "Iceland" = "Islandia",
+  "India" = "India",
+  "Ireland" = "Irlanda",
+  "Israel" = "Israel",
+  "Italy" = "Italia",
+  "Japan" = "Japón",
+  "Korea, Rep." = "Corea del Sur",
+  "Latvia" = "Letonia",
+  "Lithuania" = "Lituania",
+  "Luxembourg" = "Luxemburgo",
+  "Malta" = "Malta",
+  "Mexico" = "México",
+  "Netherlands" = "Países Bajos",
+  "New Zealand" = "Nueva Zelanda",
+  "Norway" = "Noruega",
+  "Poland" = "Polonia",
+  "Portugal" = "Portugal",
+  "Russian Federation" = "Rusia",
+  "Singapore" = "Singapur",
+  "Slovak Republic" = "Eslovaquia",
+  "Slovenia" = "Eslovenia",
+  "Spain" = "España",
+  "Sweden" = "Suecia",
+  "Switzerland" = "Suiza",
+  "Turkey" = "Turquía",
+  "United Kingdom" = "Reino Unido",
+  "United States" = "Estados Unidos"
+)
+
+df <- data.frame(
+  x = x,
+  y = y,
+  pais = BLOQUE1$Pais,
+  quad = factor(ifelse(idx_Q1, "Q1",
+                ifelse(idx_Q2, "Q2",
+                ifelse(idx_Q3, "Q3", "Q4")))))
+
+cols <- c("Q1"="firebrick2", "Q2"="dodgerblue3",
+          "Q3"="purple3", "Q4"="darkorange2")
+
+# ---- GRAFICA ----
+p <- ggplot(df, aes(x, y, color=quad)) +
+  geom_point(size=3) +
+  geom_hline(yintercept=0, color="gray40") +
+  geom_vline(xintercept=0, color="gray40") +
+  geom_text_repel(aes(label=pais), size=4) +   # ← ETIQUETA EN ESPAÑOL
+  scale_color_manual(values=cols) +
+  labs(x = NULL, y = NULL) +
+  theme_minimal(base_size = 14) +
+  theme(
+    legend.position = "none",
+    axis.title.x = element_blank(),
+    axis.title.y = element_blank()
+  )
+
+as.ggplot(p)
+
+
+```
+```{r}
+library(ggplot2)
+library(ggrepel)
+
+df <- data.frame(
+  x = x,
+  y = y,
+  country = traduccion[BLOQUE1$Pais],
+  quad = factor(ifelse(idx_Q1, "Cuadrante I",
+                ifelse(idx_Q2, "Cuadrante II",
+                ifelse(idx_Q3, "Cuadrante III", "Cuadrante IV"))),
+                levels = c("Cuadrante II", "Cuadrante I", "Cuadrante III", "Cuadrante IV"))
+)
+
+cols <- c("Cuadrante I"="firebrick2", "Cuadrante II"="dodgerblue3",
+          "Cuadrante III"="purple3", "Cuadrante IV"="darkorange2")
+
+p <- ggplot(df, aes(x, y, color=quad)) +
+  geom_point(size=3) +
+  geom_hline(yintercept=0, color="gray40") +
+  geom_vline(xintercept=0, color="gray40") +
+  geom_text_repel(aes(label = Pais), size=6) +
+  scale_color_manual(values = cols) +
+  facet_wrap(~ quad, scales = "free") +
+  theme_minimal(base_size = 14) +
+  theme(
+    legend.position = "none",
+    axis.title.x = element_blank(),
+    axis.title.y = element_blank(),
+    strip.text = element_text(size=15, face="bold")
+  )
+
+p
+
+```
+
+
+
+```{r}
+library(calibrate)
+
+plot(x, y,
+     xlab="", ylab="",
+     pch=20, col="black",
+     xlim = range(x) / 1.2,
+     ylim = range(y) / 0.9,
+     cex=1.2, asp=1)
+
+abline(h=0, v=0, col="gray40", lwd=1.2)
+grid(col="gray85")
+
+points(x[idx_Q1], y[idx_Q1], col="firebrick2", pch=20, cex=1.5)
+points(x[idx_Q2], y[idx_Q2], col="dodgerblue3", pch=20, cex=1.5)
+points(x[idx_Q3], y[idx_Q3], col="purple3", pch=20, cex=1.5)
+points(x[idx_Q4], y[idx_Q4], col="darkorange2", pch=20, cex=1.5)
+
+textxy(x, y, labs = BLOQUE1$Pais, cx = 1.5)
+
+```
+
+
+Compromiso por cuadrantes:
+
+```{r}
+plot(x[idx_Q1], y[idx_Q1], col="firebrick2", pch=20,
+     main="Cuadrante I", xlab="", ylab="", asp=1)
+abline(h=0,v=0)
+
+text(x[idx_Q1], y[idx_Q1], labels = BLOQUE1$Pais[idx_Q1],
+     pos=4, cex=0.8)
+```
+
+```{r}
+
+x_Q1 <- x[idx_Q1]
+y_Q1 <- y[idx_Q1]
+labels_Q1 <- BLOQUE1$Pais[idx_Q1]
+
+xlim_Q1 <- c(min(x_Q1) - 0.5, max(x_Q1) + 0.5)
+ylim_Q1 <- c(min(y_Q1) - 0.5, max(y_Q1) + 0.5)
+
+plot(
+  x_Q1, y_Q1,
+  col = "firebrick2", pch = 19,
+  xlab = "", ylab = "",
+  xlim = xlim_Q1,
+  ylim = ylim_Q1,
+  main = "Cuadrante I",
+  cex.main = 1.6,
+  xaxt = "n", yaxt = "n"
+)
+
+abline(h = 0, v = 0, col = "gray40", lwd = 1.2)
+
+text(x_Q1, y_Q1, labels = labels_Q1,
+     pos = 4, cex = 1.1)
+
+axis(1, at = seq(xlim_Q1[1], xlim_Q1[2], by = 5), labels = NULL, cex.axis = 1.2)
+axis(2, at = seq(ylim_Q1[1], ylim_Q1[2], by = 5), labels = NULL, cex.axis = 1.2)
+
+
+```
+```{r}
+
+xlim_Q1 <- c(0, max(x[idx_Q1]) * 1.05)
+ylim_Q1 <- c(0, max(y[idx_Q1]) * 1.05)
+
+plot(x[idx_Q1], y[idx_Q1],
+     col="firebrick2", pch=20,
+     xlab="", ylab="",
+     xlim=xlim_Q1, ylim=ylim_Q1,
+     axes=FALSE,  
+     main="Cuadrante I")
+
+abline(h=0, v=0, lwd=1.2, col="gray40")
+
+text(x[idx_Q1], y[idx_Q1],
+     labels = BLOQUE1$Pais[idx_Q1],
+     pos=4, cex=1.1)
+
+```
+```{r}
+plot(x[idx_Q2], y[idx_Q2], col="dodgerblue3", pch=20,
+     main="Cuadrante II", xlab="", ylab="", asp=1)
+abline(h=0,v=0)
+
+text(x[idx_Q2], y[idx_Q2], labels = BLOQUE1$Pais[idx_Q2],
+     pos=4, cex=0.8)
+```
+```{r}
+xlim_Q2 <- c(min(x[idx_Q2]) * 1.05, 3)
+ylim_Q2 <- c(0, max(y[idx_Q2]) * 1.05)
+
+plot(x[idx_Q2], y[idx_Q2],
+     col="dodgerblue3", pch=20,
+     xlab="", ylab="",
+     xlim=xlim_Q2, ylim=ylim_Q2,
+     axes=FALSE,  
+     main="Cuadrante II")
+
+abline(h=0, v=0, lwd=1.2, col="gray40")
+
+text(x[idx_Q2], y[idx_Q2],
+     labels = BLOQUE1$Pais[idx_Q2],
+     pos=4, cex=1.1)
+
+```
+
+
+```{r}
+plot(x[idx_Q3], y[idx_Q3], col="purple3", pch=20,
+     main="Cuadrante III", xlab="", ylab="", asp=1)
+abline(h=0,v=0)
+
+text(x[idx_Q3], y[idx_Q3], labels = BLOQUE1$Pais[idx_Q3],
+     pos=4, cex=0.8)
+```
+```{r}
+xlim_Q3 <- c(min(x[idx_Q3]) * 1.05, 3)
+ylim_Q3 <- c(min(y[idx_Q3]) * 1, 0)
+
+plot(x[idx_Q3], y[idx_Q3],
+     col="purple3", pch=20,
+     xlab="", ylab="",
+     xlim=xlim_Q3, ylim=ylim_Q3,
+     axes=FALSE,  
+     main="Cuadrante III")
+
+abline(h=0, v=0, lwd=1.2, col="gray40")
+
+text(x[idx_Q3], y[idx_Q3],
+     labels = BLOQUE1$Pais[idx_Q3],
+     pos=4, cex=1.1)
+```
+
+
+```{r}
+plot(x[idx_Q4], y[idx_Q4], col="darkorange2", pch=20,
+     main="Cuadrante IV", xlab="", ylab="", asp=1)
+abline(h=0,v=0)
+
+text(x[idx_Q4], y[idx_Q4], labels = BLOQUE1$Pais[idx_Q4],
+     pos=4, cex=0.8)
+```
+
+```{r}
+xlim_Q4 <- c(0, max(x[idx_Q4]) * 1.20)
+ylim_Q4 <- c(min(y[idx_Q4]) * 1, 0)
+
+plot(x[idx_Q4], y[idx_Q4],
+     col="darkorange2", pch=20,
+     xlab="", ylab="",
+     xlim=xlim_Q4, ylim=ylim_Q4,
+     axes=FALSE,  
+     main="Cuadrante IV")
+
+abline(h=0, v=0, lwd=1.2, col="gray40")
+
+text(x[idx_Q4], y[idx_Q4],
+     labels = BLOQUE1$Pais[idx_Q4],
+     pos=4, cex=1.1)
+```
+```{r}
+
+xlim_Q4 <- c(0, max(x[idx_Q4]) * 1.20)
+ylim_Q4 <- c(min(y[idx_Q4]) * 1, 0)
+
+plot(x[idx_Q4], y[idx_Q4],
+     col="darkorange2", pch=20,
+     xlab="", ylab="",
+     xlim=xlim_Q4, ylim=ylim_Q4,
+     axes=FALSE,
+     main="Cuadrante IV")
+
+abline(h=0, v=0, lwd=1.2, col="gray40")
+
+col_index <- which(BLOQUE1$Pais[idx_Q4] == "Colombia")
+bra_index <- which(BLOQUE1$Pais[idx_Q4] == "Brasil")
+
+otros <- setdiff(seq_along(idx_Q4), c(col_index, bra_index))
+
+text(x[idx_Q4][otros], y[idx_Q4][otros],
+     labels = BLOQUE1$Pais[idx_Q4][otros],
+     pos=4, cex=1.1)
+     
+# Colombia
+text(x[idx_Q4][col_index] + 0.02,
+     y[idx_Q4][col_index] + 0.02,
+     labels = "Colombia",
+     pos=4, cex=1.1)
+
+# Brazil
+text(x[idx_Q4][bra_index] - 0.02,
+     y[idx_Q4][bra_index] - 0.02,
+     labels = "Brazil",
+     pos=1, cex=1.1)
+
+
+```
+
+
+Para interpretar las posiciones compromiso de los individuos en su
+representación euclidiana, se calculan las correlaciones de las variables con los ejes del compromiso:
+
+```{r}
+# Calcular correlaciones con los ejes 1 y 2 del compromiso
+cor_2019 <- cor(BLOQUE1[,2:5], Find[,1:2])
+cor_2020 <- cor(BLOQUE2[,2:5], Find[,1:2])
+cor_2021 <- cor(BLOQUE3[,2:5], Find[,1:2])
+cor_2022 <- cor(BLOQUE4[,2:5], Find[,1:2])
+cor_2023 <- cor(BLOQUE5[,2:5], Find[,1:2])
+cor_2024 <- cor(BLOQUE6[,2:5], Find[,1:2])
+cor_2025 <- cor(BLOQUE7[,2:5], Find[,1:2])
+
+cor_2019
+cor_2020 
+cor_2021 
+cor_2022 
+cor_2023 
+cor_2024 
+cor_2025 
+
+```
+```{r}
+library(dplyr)
+library(tidyr)
+
+cor_list <- list(
+  "2019" = cor_2019,
+  "2020" = cor_2020,
+  "2021" = cor_2021,
+  "2022" = cor_2022,
+  "2023" = cor_2023,
+  "2024" = cor_2024,
+  "2025" = cor_2025
+)
+
+cor_long <- bind_rows(
+  lapply(names(cor_list), function(year){
+    as.data.frame(cor_list[[year]]) %>%
+      mutate(Dimension = rep(c("Salud", "Finanzas", "Calidad de Vida", "Bienestar Material")),
+             Año = year)
+  }),
+  .id = "ID"
+)
+
+cor_long <- cor_long %>%
+  select(Año, Dimension, Eje1 = V1, Eje2 = V2)
+
+colnames(cor_long) <- c("ID", "Eje1", "Eje2", "Dimension", "Año")
+
+```
+
+```{r}
+library(ggplot2)
+library(viridis)
+
+cor_melt <- cor_long %>%
+  pivot_longer(cols = c(Eje1, Eje2),
+               names_to = "Eje",
+               values_to = "Correlacion")
+
+# Heatmap
+ggplot(cor_melt, aes(x = Año, y = Dimension, fill = Correlacion)) +
+  geom_tile(color = "white") +
+  facet_wrap(~ Eje, ncol = 1) +
+  scale_fill_viridis(option = "plasma", limits=c(-1,1)) +
+  geom_text(aes(label = round(Correlacion, 2)), color="black", size=8) +
+  theme_minimal(base_size = 15) +
+  labs(title="Heatmap de correlaciones: Dimensiones vs Ejes del compromiso",
+       x="", y="") +
+  theme(axis.text.x = element_text(angle=45, hjust=1, face = "bold", size=12),
+        axis.text.y = element_text(face = "bold", size=12),
+        plot.title = element_text(hjust = 0.5, size = 15))
+
+```
+
+
+Contribuciones:
+
+```{r}
+bloques <- list(BLOQUE1, BLOQUE2, BLOQUE3, BLOQUE4, BLOQUE5, BLOQUE6, BLOQUE7)
+nombres_anios <- c("2019","2020","2021","2022","2023","2024","2025")
+
+resultados <- data.frame(
+  Año = rep(nombres_anios, each = 4),
+  Dimensión = rep(c("Salud", "Finanzas", "Calidad de Vida", "Bienestar Material"), times = 7),
+  Contrib_Eje1 = NA,
+  Contrib_Eje2 = NA
+)
+
+fila <- 1
+for (i in 1:7) {
+  
+  cors <- cor(bloques[[i]][,2:5], Find[,1:2])
+  
+  # contribuciones = correlación^2 / suma total
+  contrib1 <- (cors[,1]^2) / sum(cors[,1]^2)
+  contrib2 <- (cors[,2]^2) / sum(cors[,2]^2)
+  
+  resultados$Contrib_Eje1[fila:(fila+3)] <- contrib1
+  resultados$Contrib_Eje2[fila:(fila+3)] <- contrib2
+  
+  fila <- fila + 4
+}
+
+resultados$Contrib_Eje1 <- round(resultados$Contrib_Eje1 * 100, 2)
+resultados$Contrib_Eje2 <- round(resultados$Contrib_Eje2 * 100, 2)
+
+resultados
+
+```
+
+```{r}
+library(writexl)
+write_xlsx(resulta, "Contribuciones_DIM_vs_Ejes.xlsx")
+
+```
+
+Gráfico de compromiso -> Correlaciones
+
+```{r}
+years <- c("2019","2020","2021","2022","2023","2024","2025")
+
+vars <- c("Salud", "Finanzas", "Calidad de Vida", "Bienestar Material")
+
+cor_list <- list(cor_2019, cor_2020, cor_2021, cor_2022, cor_2023, cor_2024, cor_2025)
+
+cor_df <- do.call(rbind,
+                  lapply(1:7, function(i){
+                    data.frame(
+                      Variable = vars,
+                      Eje1 = cor_list[[i]][,1],
+                      Eje2 = cor_list[[i]][,2],
+                      Año = years[i]
+                    )
+                  })
+)
+
+```
+
+
+```{r}
+
+ggplot(cor_df, aes(x = Eje1, y = Eje2, color = Año, shape = Variable)) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "gray") +
+  geom_vline(xintercept = 0, linetype = "dashed", color = "gray") +
+  
+  # Puntos sin textos
+  geom_point(size = 4, alpha = 0.9) +
+  
+  scale_color_manual(values = c("2019"="darkred","2020"="steelblue2","2021"="gold",
+                                "2022"="magenta3","2023"="darkgreen","2024"="orange",
+                                "2025"="green3")) +
+  
+  scale_shape_manual(values = c(
+    "Bienestar Material" = 16,
+    "Calidad de Vida" = 17,
+    "Finanzas" = 15,
+    "Salud" = 3
+  )) +
+  
+  labs(
+    title = "Correlación entre dimensiones del GRI y los ejes del compromiso",
+    x = "Eje 1 del compromiso",
+    y = "Eje 2 del compromiso",
+    color = "Año",
+    shape = "Variable"
+  ) +
+  
+  theme_minimal(base_size = 12) +
+  theme(
+    legend.position = "right",
+    plot.title = element_text(hjust = 0.5)
+  )
+
+```
+
+# Analisis por Trayectorias
+
+# Calculo de k means para encontrar trayectorias cercanas a una dada
+```{r}
+# Función kmeans_restringido (la que ya tienes)
+kmeans_restringido <- function(xx, yy, max_por_cluster = 4) {
+  
+  n <- length(xx)
+  datos <- cbind(xx, yy)
+  
+  # Estimar número de clusters necesarios
+  k_inicial <- ceiling(n / max_por_cluster)
+  
+  # Aplicar k-means normal
+  set.seed(123)
+  km <- kmeans(datos, centers = k_inicial, nstart = 25)
+  
+  asignaciones <- km$cluster
+  
+  # Reasignar puntos de clusters que exceden el límite
+  while(any(table(asignaciones) > max_por_cluster)) {
+    
+    # Encontrar clusters sobrecargados
+    conteos <- table(asignaciones)
+    clusters_sobrecargados <- as.numeric(names(conteos[conteos > max_por_cluster]))
+    
+    for(cluster_id in clusters_sobrecargados) {
+      
+      # Puntos en este cluster
+      indices_cluster <- which(asignaciones == cluster_id)
+      
+      if(length(indices_cluster) > max_por_cluster) {
+        
+        # Calcular centro del cluster
+        centro_x <- mean(xx[indices_cluster])
+        centro_y <- mean(yy[indices_cluster])
+        
+        # Calcular distancias al centro
+        distancias <- sqrt((xx[indices_cluster] - centro_x)^2 + 
+                          (yy[indices_cluster] - centro_y)^2)
+        
+        # Ordenar por distancia (más lejanos primero)
+        orden <- order(distancias, decreasing = TRUE)
+        
+        # Puntos a reasignar (los más lejanos)
+        n_reasignar <- length(indices_cluster) - max_por_cluster
+        puntos_reasignar <- indices_cluster[orden[1:n_reasignar]]
+        
+        # Crear nuevo cluster o asignar a clusters con espacio
+        for(punto in puntos_reasignar) {
+          # Buscar cluster más cercano con espacio
+          clusters_disponibles <- which(table(asignaciones) < max_por_cluster)
+          
+          if(length(clusters_disponibles) > 0) {
+            # Calcular distancia a cada cluster disponible
+            dist_clusters <- sapply(clusters_disponibles, function(c) {
+              indices_c <- which(asignaciones == c)
+              centro_c_x <- mean(xx[indices_c])
+              centro_c_y <- mean(yy[indices_c])
+              sqrt((xx[punto] - centro_c_x)^2 + (yy[punto] - centro_c_y)^2)
+            })
+            
+            # Asignar al más cercano
+            asignaciones[punto] <- clusters_disponibles[which.min(dist_clusters)]
+          } else {
+            # Crear nuevo cluster
+            asignaciones[punto] <- max(asignaciones) + 1
+          }
+        }
+      }
+    }
+  }
+  
+  return(asignaciones)
+}
+```
+
+
+```{r}
+F1=S1%*%Find # AÑo 2019
+F2=S2%*%Find # AÑo 2020
+F3=S3%*%Find # AÑo 2021
+F4=S4%*%Find # AÑo 2022
+F5=S5%*%Find # AÑo 2023
+F6=S6%*%Find # AÑo 2024
+F7=S7%*%Find # AÑo 2025
+
+
+# Aplicar clustering
+clusters <- kmeans_restringido(xx, yy, max_por_cluster = 4)
+
+# CREAR TABLA FINAL
+tabla_clusters <- data.frame(
+  Individuo = 1:44,
+  Cluster = clusters
+)
+
+tabla_clusters['Pais'] = c('Australia', 'Austria', 'Bélgica',
+'Brasil', 'Canadá', 'Chile', 'China', 'Colombia', 'Chipre',
+'República Checa', 'Dinamarca', 'Estonia', 'Finlandia', 'Francia',
+'Alemania', 'Grecia', 'Hungría', 'Islandia', 'India', 'Irlanda',
+'Israel', 'Italia', 'Japan', 'Corea del sur', 'Letonia',
+'Lituania', 'Luxemburgo', 'Malta', 'México', 'Países bajos',
+'Nueva Zelanda', 'Noruega', 'Polonia','Portugal', 'Rusia',
+'Singapur', 'República eslovaca', 'Slovenia', 'España',
+'Suecia', 'Suiza','Turquía', 'Reino Unido', 'Estados Unidos'
+)
+
+tabla_clusters
+```
+
+```{r}
+plot_trayectorias_auto <- function(indices, margen_extra = 0.05, leyenda_pais = "topright", leyenda_ano = "bottomright", title = "Trayectorias Temporales") {
+  library(calibrate)  
+  colores <- rainbow(length(indices))
+  
+  # Recolectar todos los valores
+  todos_xx <- c()
+  todos_yy <- c()
+  
+  for(idx in indices) {
+    todos_xx <- c(todos_xx, get(paste0("xx", idx)))
+    todos_yy <- c(todos_yy, get(paste0("yy", idx)))
+  }
+  
+  # Calcular rango
+  rango_x <- diff(range(todos_xx))
+  rango_y <- diff(range(todos_yy))
+  
+  # Límites con margen porcentual
+  xlim <- c(min(todos_xx) - rango_x * margen_extra, 
+            max(todos_xx) + rango_x * margen_extra)
+  ylim <- c(min(todos_yy) - rango_y * margen_extra, 
+            max(todos_yy) + rango_y * margen_extra)
+  
+  # Figuras para cada año
+  pch_vals <- c(0,1,2,15,16,17,8)
+  
+  # Gráfico
+  plot(1, xlim = xlim, ylim = ylim,
+#     xaxt = "n", yaxt = "n",
+     main = title,
+     cex.axis = 0.6)  # asp=1 mantiene proporción
+  
+  abline(h = 0, v = 0, col = "gray60", lty = 2)
+  
+  labels <- c("2019", "2020", "2021", "2022", "2023", "2024", "2025")
+  
+  for(i in 1:length(indices)) {
+    idx <- indices[i]
+    xx <- get(paste0("xx", idx))
+    yy <- get(paste0("yy", idx))
+    
+    # Trayectorias
+    lines(xx, yy, col = colores[i], pch = pch_vals, lwd = 2)
+    
+    # Puntos para cada año
+    points(xx, yy,
+       pch = pch_vals,
+       cex = 1.5)
+  }
+  
+  # --- LEYENDA 1: Países ---
+  legend(leyenda_pais,
+       legend = tabla_clusters[indices, 3],
+       col = colores,
+       pch = 16,
+       lwd = 2,
+       title = "Países",
+       cex = 0.8,
+       bty = "n")
+
+  # --- LEYENDA 2: Años (símbolos) ---
+  legend(leyenda_ano,
+         legend = labels,
+         pch = pch_vals,
+         col = "black",
+         title = "Años",
+         cex = 0.8,
+         bty = "n")
+}
+```
+
+```{r}
+for(i in 1:44) {
+  # Crear variable xxi
+  assign(paste0("xx", i), 
+         c(F1[i,1], F2[i,1], F3[i,1], F4[i,1], F5[i,1], F6[i,1], F7[i,1]))
+  
+  # Crear variable yyi
+  assign(paste0("yy", i), 
+         c(F1[i,2], F2[i,2], F3[i,2], F4[i,2], F5[i,2], F6[i,2], F7[i,2]))
+}
+
+# Trayectorias extremas
+plot_trayectorias_auto(as.vector(c(33,27,43)), margen_extra = 0, "topleft", "bottomright", "Trayectorias Extremas")
+```
+
+```{r}
+distancia_recorrida <- function(idx) {
+    xx <- get(paste0("xx", idx))
+    yy <- get(paste0("yy", idx))  
+    distancia <- sum( sqrt( diff(xx)^2 + diff(yy)^2 ) )
+    
+    return(distancia)
+}
+
+for(idx in 1:length(tabla_clusters[,1])) {
+  tabla_clusters[idx,"Distancia"] = distancia_recorrida(idx)
+}
+
+```
+
+
+```{r}
+lista_bloques <- mget(paste0("BLOQUE", 1:7))
+df_general <- bind_rows(lista_bloques)
+
+
+dimension_promedio <- df_general %>%
+  group_by(Pais) %>%
+  summarise(across(where(is.numeric), ~mean(.x, na.rm = TRUE)))
+
+
+tabla_clusters <- tabla_clusters %>%
+  left_join(dimension_promedio[,1:6], by = "Pais")
+
+tabla_clusters
+
+```
+
+```{r}
+library(corrplot)
+library(PerformanceAnalytics)
+
+correlaciones <- round(cor(tabla_clusters[,c("Distancia","Salud","Finanzas","Calidad de vida","Bienestar material")]),2)
+
+#png("correlaciones.png", width = 1600, height = 1600, res = 200)
+chart.Correlation(correlaciones, histogram=TRUE, pch='+')
+#dev.off()
+```
+
+# Cambios totales en el eje y y x
+
+```{r}
+cambio_x <- numeric(44)
+cambio_y <- numeric(44)
+
+# Calcular cambio para cada individuo
+for(i in 1:44) {
+  # Obtener las coordenadas de la trayectoria
+  xx_i <- get(paste0("xx", i))
+  yy_i <- get(paste0("yy", i))
+  
+  # Cambio total = última posición - primera posición
+  cambio_x[i] <- max(xx_i) - min(xx_i)  # 2025 - 2019
+  cambio_y[i] <- max(yy_i) - min(yy_i)
+}
+
+tabla_clusters$Distancia_x <- cambio_x
+tabla_clusters$Distancia_y <- cambio_y
+```
+
+
+```{r}
+Q90_x <- quantile(tabla_clusters$Distancia_x, 0.9)
+
+#png("high_var_x.png", width = 1600, height = 1600, res = 200)
+plot_trayectorias_auto(filter(tabla_clusters, Distancia_x > Q90_x)$Individuo, margen_extra = 0, "right", "bottomleft", "Trayectorias con gran variabilidad en el eje x")
+#dev.off()
+```
+
+# Cambios en el eje y
+```{r}
+Q90_y <- quantile(tabla_clusters$Distancia_y, 0.9)
+
+#png("high_var_y.png", width = 1600, height = 1600, res = 200)
+plot_trayectorias_auto(filter(tabla_clusters, Distancia_y > Q90_y)$Individuo, margen_extra = 0, "center", "bottomright", "Trayectorias con gran variación en el eje y")
+#dev.off()
+```
+
+# Cambios pequeños en el eje x
+```{r}
+Q10_x <- quantile(tabla_clusters$Distancia_x, 0.1)
+
+#png("low_var_x.png", width = 1600, height = 1600, res = 200)
+plot_trayectorias_auto(filter(tabla_clusters, Distancia_x < Q10_x)$Individuo, margen_extra = 0, "bottomright", "topleft", "Trayectorias con menor variacion en el eje x")
+#dev.off()
+
+```
+
+
+```{r}
+Q10_y <- quantile(tabla_clusters$Distancia_y, 0.1)
+
+#png("low_var_y.png", width = 1600, height = 1600, res = 200)
+plot_trayectorias_auto(as.vector(c(2,3,14,32,43)), margen_extra = 0, "topright", "bottomleft", "Trayectorias menos variación en el eje y")
+#dev.off()
+```
