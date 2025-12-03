@@ -4,7 +4,8 @@ En el presente repositorio se encuentra el código fuente utilizado para la gene
 
 El codigo se encuentra dividido en tres etapas, siguiendo la metodología STATIS, las cuales son:
 
-![alt text](image.png)
+![Statis metodologia](https://github.com/AlvaroVillamizar/STATIS_ChaparroPinz-n/blob/main/Metodolog%C3%ADa_STATIS_resumen.png)
+
 
 - Análisis de la interestructura
 
